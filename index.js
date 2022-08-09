@@ -19,8 +19,43 @@ const secondDiv = () => {
     return div;
 }
 
+const button1 = () => {
+    console.log('creating button')
+    const div = document.createElement("button");
+    div.innerHTML = "set orange";
+    div.id = "button1"
+    console.log('returning div')
+    return div;
+}
+
+const button2 = () => {
+    console.log('creating button')
+    const div = document.createElement("button");
+    div.innerHTML = "set blank";
+    div.id = "fadeout"
+    console.log('returning div')
+    return div;
+}
+
+const dataDiv = () => {
+    console.log('creating div')
+    const div = document.createElement("div");
+    div.innerHTML = `<p style="color:blue; background-color: white">this is the data div!</p>`;
+    div.id = "dataDiv"
+    console.log('returning div')
+    return div;
+    
+}
+
+
 document.body.appendChild(init());
 document.body.appendChild(secondDiv());
+document.body.appendChild(button1());
+document.body.appendChild(button2());
+document.body.appendChild(document.createElement("hr"))
+document.body.appendChild(dataDiv())
+
+
 
 
 
@@ -39,13 +74,18 @@ var paragraph = d3.select("#mainDiv")
         });
 
 
-
-d3.select("#secondDiv")
-.on("mouseover", function(){
-    d3.select(this)
+// fading the background in and out
+d3.select("#button1")
+.on("click", function(){
+    d3.select('#secondDiv')
+        .transition(d3.transition().duration(1000))
         .style("background-color", "orange");
 })
-.on("mouseout", function(){
-    d3.select(this)
-        .style("background-color", "")
+d3.select("#fadeout")
+.on("click", function(){
+    d3.select('#secondDiv')
+        .transition(d3.transition().duration(1000))
+        .style("background-color", "#ffffff")
 });
+
+//data div
