@@ -24,6 +24,11 @@ const button1 = () => {
     const div = document.createElement("button");
     div.innerHTML = "set orange";
     div.id = "button1"
+    div.type = "button"
+    div.classList.add('btn')
+    div.classList.add('btn-primary')
+    div.classList.add('m-2')
+
     console.log('returning div')
     return div;
 }
@@ -32,20 +37,26 @@ const button2 = () => {
     console.log('creating button')
     const div = document.createElement("button");
     div.innerHTML = "set blank";
+    div.classList.add('btn')
+    div.classList.add('btn-primary')
+    div.classList.add('m-2')
+
     div.id = "fadeout"
     console.log('returning div')
     return div;
 }
 
-const dataDiv = () => {
-    console.log('creating div')
-    const div = document.createElement("div");
-    div.innerHTML = `<p style="color:blue; background-color: white">this is the data div!</p>`;
-    div.id = "dataDiv"
-    console.log('returning div')
-    return div;
+// const dataDiv = () => {
+//     console.log('creating div')
+//     const div = document.createElement("div");
+//     div.innerHTML = `<p style="color:blue; background-color: white">this is the data div!</p>`;
+//     div.id = "dataDiv"
+//     console.log('returning div')
+//     document.body.appendChild(div)
+
+//     return div;
     
-}
+// }
 
 
 document.body.appendChild(init());
@@ -53,7 +64,7 @@ document.body.appendChild(secondDiv());
 document.body.appendChild(button1());
 document.body.appendChild(button2());
 document.body.appendChild(document.createElement("hr"))
-document.body.appendChild(dataDiv())
+// document.body.appendChild(dataDiv())
 
 
 
@@ -61,10 +72,9 @@ document.body.appendChild(dataDiv())
 
 
 
-var data = [100, 200, 300];
 var paragraph = d3.select("#mainDiv")
         .selectAll("p")
-        .data(data)
+        .data([100, 200, 300])
         .text( (d, i) => {
             console.log("d: " + d);
             console.log("i: " + i);
@@ -89,3 +99,85 @@ d3.select("#fadeout")
 });
 
 //data div
+
+
+const dataDiv = () => {
+    // this function creates the div in dom. This div contains the data that we will display with d3
+    console.log('creating div')
+    const div = document.createElement("div");
+    div.id = "dataDiv"
+    console.log('returning div')
+    document.body.appendChild(div)   
+    
+    const update = document.createElement("button");
+    update.id = "randomNum"
+    update.innerHTML = "Call API for Random Number"
+    update.type = "button"
+    update.classList.add('btn')
+    update.classList.add('btn-success')
+    update.classList.add('m-2')
+
+    document.body.appendChild(update)   
+
+
+
+}
+
+// let's call it. Now we have the dataDiv in the dom
+dataDiv()
+
+// provided we have an array of object named `data`, we will display it with `displayData`
+// we will populate `data` with fetch, or any other method
+const displayData = (data) => {
+    console.log("data from fetch is ", data)
+    var p = d3.select("#dataDiv")
+        .selectAll("p")
+        .data(data) // you need to pass an array to the `data` function
+        .enter()
+        .append("span")
+        .style('color', (d)=>{
+            if (d===3){
+                return "red"
+            } else {
+                return "black"
+            }
+        })
+        .text(function (d) {
+            return `(${d.x},${d.y})`;
+        })
+        .exit()
+        .remove()
+        ;
+}
+
+// util function to generate random integer
+function between(min, max) {  
+    return Math.floor(
+      Math.random() * (max - min) + min
+    )
+  }
+
+// this `fetchData` will call the localhost:8080 api, a mock api that I made, that will return random x and y numbers. it returns an array!
+// fetchData calls display data as you can see and pass in the fetched data
+// if the api is offline, then `catch` function will generate the quite the same data.
+const fetchData = async () =>{
+    try {
+        const resp = await fetch("http://localhost:8080/data.json")
+        const data = await resp.json()
+        displayData(data)
+    } catch {
+        console.log("fetch has failed, returning default data")
+        const data = [{x:between(1,20),y:between(1,20)},{x:between(1,20),y:between(1,20)},{x:between(1,20),y:between(1,20)},{x:between(1,20),y:between(1,20)},{x:between(1,20),y:between(1,20)}]
+        displayData(data)
+
+    }
+    
+}
+
+// set the function; if the button is clicked, then the fetchData is called!
+d3.select("#randomNum")
+.on("click", function(){
+    d3.select("#dataDiv")
+        .text('')
+    fetchData()
+});
