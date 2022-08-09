@@ -59,11 +59,15 @@ const button2 = () => {
 // }
 
 
+
+
+
 document.body.appendChild(init());
 document.body.appendChild(secondDiv());
 document.body.appendChild(button1());
 document.body.appendChild(button2());
-document.body.appendChild(document.createElement("hr"))
+
+
 // document.body.appendChild(dataDiv())
 
 
@@ -124,6 +128,7 @@ const dataDiv = () => {
 }
 
 // let's call it. Now we have the dataDiv in the dom
+document.body.appendChild(document.createElement("hr"))
 dataDiv()
 
 // provided we have an array of object named `data`, we will display it with `displayData`
@@ -180,4 +185,91 @@ d3.select("#randomNum")
     d3.select("#dataDiv")
         .text('')
     fetchData()
+});
+
+
+
+
+// svg!!!!
+
+// create the div
+document.body.appendChild(document.createElement("hr"))
+const svgDiv = ()=>{
+    var div = document.createElement("div")
+    div.id = "svgDiv"
+    document.body.appendChild(div)
+
+    const update = document.createElement("button");
+    update.id = "createLine"
+    update.innerHTML = "draw line"
+    update.type = "button"
+    update.classList.add('btn')
+    update.classList.add('btn-success')
+    update.classList.add('m-2')
+
+    document.body.appendChild(update)   
+
+    const transition = document.createElement("button");
+    transition.id = "transitionLine"
+    transition.innerHTML = "transition"
+    transition.type = "button"
+    transition.classList.add('btn')
+    transition.classList.add('btn-success')
+    transition.classList.add('m-2')
+
+    document.body.appendChild(transition)   
+    
+
+}
+svgDiv()
+const drawLine = ()=>{
+    //Create SVG element
+    var width = 500;
+    var height = 100;
+    
+    //Create SVG element
+    var svg = d3.select("#svgDiv")
+    
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    ;
+    
+    //Create line element inside SVG
+    svg
+        .append("line")
+       .attr("x1", between(35,200))
+       .attr("x2", between(200,700))
+       .attr("y1", between(40,29))
+       .attr("y2", between(40,100))
+       .attr("stroke", "black")
+       .attr('id', 'svgLine')
+
+    
+       
+
+}
+
+d3.select("#createLine")
+.on("click", function(){
+    console.log('erasing line')
+    d3.select("#svgDiv")
+        .text('')
+    console.log("drawingline")
+    drawLine()
+});
+
+
+const transitionLineFunc = () =>{
+
+}
+
+d3.select("#transitionLine")
+.on("click", ()=>{
+    d3.select("#svgLine")
+    .transition()
+    .attr("x1", between(60,400))
+    .attr("x2", between(17,700))
+    .attr("y1", between(40,100))
+    .attr("y2", between(40,100))
 });
