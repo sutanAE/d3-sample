@@ -280,6 +280,7 @@ document.body.appendChild(document.createElement("hr"))
 const barDiv = ()=>{
     var div = document.createElement("div")
     div.id = "barDiv"
+    div.classList.add("mx-5")
     document.body.appendChild(div)
 
     const update = document.createElement("button");
@@ -305,3 +306,30 @@ const barDiv = ()=>{
 
 }
 barDiv()
+
+
+const addBar = () => {
+    console.log("adding bar")
+
+    d3.select('#barDiv').html(
+        `
+        <svg id="staticBarChart" class="chart" width="420" height="120">
+        <g transform="translate(0,0)">
+            <rect width="50" height="19"></rect>
+            <text x="47" y="9.5" dy=".35em">5</text>
+        </g>
+        <g transform="translate(0,20)">
+            <rect width="100" height="19"></rect>
+            <text x="97" y="9.5" dy=".35em">10</text>
+        </g>
+        <g transform="translate(0,40)">
+            <rect width="120" height="19"></rect>
+            <text x="117" y="9.5" dy=".35em">12</text>
+        </g>
+    </svg>
+        `
+    )
+
+    d3.select('#barDiv').append('p').text('this is a basic static bar graph. it is literally an html svg syntax appended to the div!')
+    
+}
