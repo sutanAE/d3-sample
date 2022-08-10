@@ -110,6 +110,7 @@ const dataDiv = () => {
     console.log('creating div')
     const div = document.createElement("div");
     div.id = "dataDiv"
+    div.classList.add("m-5")
     console.log('returning div')
     document.body.appendChild(div)   
     
@@ -135,6 +136,7 @@ dataDiv()
 // we will populate `data` with fetch, or any other method
 const displayData = (data) => {
     console.log("data from fetch is ", data)
+    d3.select("#dataDiv").text('')
     var p = d3.select("#dataDiv")
         .selectAll("p")
         .data(data) // you need to pass an array to the `data` function
@@ -184,6 +186,12 @@ d3.select("#randomNum")
 .on("click", function(){
     d3.select("#dataDiv")
         .text('')
+    d3.select("#dataDiv")
+        .html(`
+        <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+        `)
     fetchData()
 });
 
@@ -333,3 +341,13 @@ const addBar = () => {
     d3.select('#barDiv').append('p').text('this is a basic static bar graph. it is literally an html svg syntax appended to the div!')
     
 }
+
+d3.select('#createBar').on("click", addBar)
+// d3.select('#updateBar').on("click", ()=>{
+//     d3.select("#staticBarChart")
+//     .transition()
+//     .attr("x1", between(60,400))
+//     .attr("x2", between(17,700))
+//     .attr("y1", between(40,100))
+//     .attr("y2", between(40,100))
+// })
