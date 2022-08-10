@@ -369,10 +369,13 @@ const addDynamicBar = () => {
 
     var data = [between(0,15), between(0,15), between(0,15), between(0,15), between(0,15), between(0,15), between(0,15),between(0,15)];
     var width = 200,
-    scaleFactor = 10,
     barHeight = 30;
 
     d3.select("#dynamicBarDiv").text("")
+
+    var scale = d3.scaleLinear()
+                 .domain([d3.min(data), d3.max(data)])
+                 .range([0, 150]);
 
     var graph = d3.select("#dynamicBarDiv")
             .append("svg")
@@ -396,14 +399,15 @@ const addDynamicBar = () => {
     var bar_trans = bar.selectAll('rect').transition()
     bar_trans
     .attr("width", function(d) {
-                return d * scaleFactor;
+                return scale(d);
     })
     .attr("height", barHeight - 10);
 
     bar.append("text")
-    .attr("x", function(d) { return 15; })
+    .attr("x", function(d) { return scale(d); })
     .attr("y", barHeight / 2)
     .attr("dy", ".35em")
+    .style("color", "black")
     .text(function(d) { return d; });
 
     d3.select("#dynamicBarDiv").append('p').text("this one is a dynamic bar. it is set by the d3 instead of hardcode SVG")
