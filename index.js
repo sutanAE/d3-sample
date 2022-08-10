@@ -403,8 +403,9 @@ const addDynamicBar = () => {
     })
     .attr("height", barHeight - 10);
 
-    bar.append("text")
-    .attr("x", function(d) { return scale(d); })
+    var bar_text = bar.append("text").transition()
+    bar_text
+    .attr("x", function(d) { return scale(d) + 10; })
     .attr("y", barHeight / 2)
     .attr("dy", ".35em")
     .style("color", "black")
