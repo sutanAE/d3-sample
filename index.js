@@ -1,4 +1,6 @@
+// in this section we will add the div in the index.html. Let's not touch index.html and learn to manipulate it from this javascript script.
 const init = ()=>{
+    // when called, this will create a div with id mainDiv
     console.log('creating div')
     const div = document.createElement("div");
     div.innerHTML = "<p>Hello, world! from javascript eheheh</p>";
@@ -9,6 +11,7 @@ const init = ()=>{
 
 
 const secondDiv = () => {
+    // this will create a second div
     console.log('creating div')
     const div = document.createElement("div");
     div.innerHTML = "<p>Hello, world! from javascript eheheh but wait, this is the second div!</p>";
@@ -44,36 +47,13 @@ const button2 = () => {
     return div;
 }
 
-// const dataDiv = () => {
-//     console.log('creating div')
-//     const div = document.createElement("div");
-//     div.innerHTML = `<p style="color:blue; background-color: white">this is the data div!</p>`;
-//     div.id = "dataDiv"
-//     console.log('returning div')
-//     document.body.appendChild(div)
-
-//     return div;
-    
-// }
-
-
-
-
-
+// let's add all of the created elements and append it to our body!
 document.body.appendChild(init());
 document.body.appendChild(secondDiv());
 document.body.appendChild(button1());
 document.body.appendChild(button2());
 
-
-// document.body.appendChild(dataDiv())
-
-
-
-
-
-
-
+// now let's get the 100 in the first div
 var paragraph = d3.select("#mainDiv")
         .selectAll("p")
         .data([100, 200, 300])
@@ -87,6 +67,7 @@ var paragraph = d3.select("#mainDiv")
 
 
 // fading the background in and out
+// when button is clicked, the second div will change to orange!
 d3.select("#button1")
 .on("click", function(){
     d3.select('#secondDiv')
@@ -101,8 +82,9 @@ d3.select("#fadeout")
 });
 
 //data div
+// using mock API let's call the data, using asynchronous function
 
-
+//but first, let's create the div for this
 const dataDiv = () => {
     // this function creates the div in dom. This div contains the data that we will display with d3
     console.log('creating div')
@@ -133,7 +115,16 @@ dataDiv()
 // provided we have an array of object named `data`, we will display it with `displayData`
 // we will populate `data` with fetch, or any other method
 const displayData = (data) => {
+    // we expect data as array
+    // this data is passed from a fetch; like, fetch("www.url.com/data.json")
     console.log("data from fetch is ", data)
+
+
+    // actually check if data is an array. test it!
+    var isArray = Array.isArray(data)
+    if (!isArray) throw "data is not an array at displayData"
+
+    // let's manipulate the dom
     d3.select("#dataDiv").text('')
     var p = d3.select("#dataDiv")
         .selectAll("p")
