@@ -273,3 +273,35 @@ d3.select("#transitionLine")
     .attr("y1", between(40,100))
     .attr("y2", between(40,100))
 });
+
+
+// let's create a bar chartdocument.body.appendChild(document.createElement("hr"))
+document.body.appendChild(document.createElement("hr"))
+const barDiv = ()=>{
+    var div = document.createElement("div")
+    div.id = "barDiv"
+    document.body.appendChild(div)
+
+    const update = document.createElement("button");
+    update.id = "createBar"
+    update.innerHTML = "draw bar"
+    update.type = "button"
+    update.classList.add('btn')
+    update.classList.add('btn-success')
+    update.classList.add('m-2')
+
+    document.body.appendChild(update)   
+
+    const transition = document.createElement("button");
+    transition.id = "updateBar"
+    transition.innerHTML = "updateBar"
+    transition.type = "button"
+    transition.classList.add('btn')
+    transition.classList.add('btn-success')
+    transition.classList.add('m-2')
+
+    document.body.appendChild(transition)   
+    
+
+}
+barDiv()
