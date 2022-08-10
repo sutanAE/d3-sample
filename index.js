@@ -351,3 +351,75 @@ d3.select('#createBar').on("click", addBar)
 //     .attr("y1", between(40,100))
 //     .attr("y2", between(40,100))
 // })
+
+
+// now let's add dynamic bar
+document.body.appendChild(document.createElement("hr"))
+const dynamicBarDiv = ()=>{
+    var div = document.createElement("div")
+    div.id = "dynamicBarDiv"
+    div.classList.add("mx-5")
+    document.body.appendChild(div)
+
+    const update = document.createElement("button");
+    update.id = "createDynamicBar"
+    update.innerHTML = "draw bar"
+    update.type = "button"
+    update.classList.add('btn')
+    update.classList.add('btn-success')
+    update.classList.add('m-2')
+
+    document.body.appendChild(update)   
+
+    const transition = document.createElement("button");
+    transition.id = "updateDynamicBar"
+    transition.innerHTML = "updateBar"
+    transition.type = "button"
+    transition.classList.add('btn')
+    transition.classList.add('btn-success')
+    transition.classList.add('m-2')
+
+    document.body.appendChild(transition)   
+    
+
+}
+dynamicBarDiv()
+
+const addDynamicBar = () => {
+
+    var data = [5, 10, 12];
+    var width = 200,
+    scaleFactor = 10,
+    barHeight = 20;
+
+    d3.select("#dynamicBarDiv").text("")
+
+    var graph = d3.select("#dynamicBarDiv")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", barHeight * data.length);
+
+    var bar = graph.selectAll("g")
+            .data(data)
+            .enter()
+            .append("g")
+            .attr("transform", function(d, i) {
+                    return "translate(0," + i * barHeight + ")";
+            });
+
+    bar.append("rect")
+    .attr("width", function(d) {
+                return d * scaleFactor;
+    })
+    .attr("height", barHeight - 1);
+
+    bar.append("text")
+    .attr("x", function(d) { return (d*scaleFactor); })
+    .attr("y", barHeight / 2)
+    .attr("dy", ".35em")
+    .text(function(d) { return d; });
+
+    d3.select("#dynamicBarDiv").append("this one is a dynamic bar. it is set by the d3 instead of hardcode SVG")
+}
+d3.select('#createDynamicBar').on("click", addDynamicBar)
+
