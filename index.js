@@ -366,12 +366,15 @@ const dynamicBarDiv = ()=>{
 dynamicBarDiv()
 
 const addDynamicBar = () => {
-
+    // set up dummy data and svg basic property
     var data = [between(0,15), between(0,15), between(0,15), between(0,15), between(0,15), between(0,15), between(0,15),between(0,15)];
     var width = 200,
     barHeight = 30;
 
-    d3.select("#dynamicBarDiv").text("")
+    var bar_collapse = d3.select("#dynamicBarDiv").selectAll("rect").transition(d3.transition().duration(5000))
+    bar_collapse.attr('width', 0)
+
+    d3.select("#dynamicBarDiv").text('').transition()
 
     var scale = d3.scaleLinear()
                  .domain([d3.min(data), d3.max(data)])
@@ -414,4 +417,6 @@ const addDynamicBar = () => {
     d3.select("#dynamicBarDiv").append('p').text("this one is a dynamic bar. it is set by the d3 instead of hardcode SVG")
 }
 d3.select('#createDynamicBar').on("click", addDynamicBar)
+
+
 
