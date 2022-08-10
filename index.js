@@ -343,15 +343,6 @@ const addBar = () => {
 }
 
 d3.select('#createBar').on("click", addBar)
-// d3.select('#updateBar').on("click", ()=>{
-//     d3.select("#staticBarChart")
-//     .transition()
-//     .attr("x1", between(60,400))
-//     .attr("x2", between(17,700))
-//     .attr("y1", between(40,100))
-//     .attr("y2", between(40,100))
-// })
-
 
 // now let's add dynamic bar
 document.body.appendChild(document.createElement("hr"))
@@ -387,10 +378,10 @@ dynamicBarDiv()
 
 const addDynamicBar = () => {
 
-    var data = [5, 10, 12];
+    var data = [between(0,15), between(0,15), between(0,15), between(0,15), between(0,15), between(0,15), between(0,15),between(0,15)];
     var width = 200,
     scaleFactor = 10,
-    barHeight = 20;
+    barHeight = 30;
 
     d3.select("#dynamicBarDiv").text("")
 
@@ -403,23 +394,30 @@ const addDynamicBar = () => {
             .data(data)
             .enter()
             .append("g")
+
             .attr("transform", function(d, i) {
                     return "translate(0," + i * barHeight + ")";
             });
 
     bar.append("rect")
     .attr("width", function(d) {
+        return 0;
+    })
+    .attr("height", barHeight - 10);
+    var bar_trans = bar.selectAll('rect').transition()
+    bar_trans
+    .attr("width", function(d) {
                 return d * scaleFactor;
     })
-    .attr("height", barHeight - 1);
+    .attr("height", barHeight - 10);
 
     bar.append("text")
-    .attr("x", function(d) { return (d*scaleFactor); })
+    .attr("x", function(d) { return 15; })
     .attr("y", barHeight / 2)
     .attr("dy", ".35em")
     .text(function(d) { return d; });
 
-    d3.select("#dynamicBarDiv").append("this one is a dynamic bar. it is set by the d3 instead of hardcode SVG")
+    d3.select("#dynamicBarDiv").append('p').text("this one is a dynamic bar. it is set by the d3 instead of hardcode SVG")
 }
 d3.select('#createDynamicBar').on("click", addDynamicBar)
 
