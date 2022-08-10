@@ -1,5 +1,3 @@
-data = [4, 8, 15, 16, 23, 42]
-
 const init = ()=>{
     console.log('creating div')
     const div = document.createElement("div");
