@@ -395,7 +395,9 @@ const addDynamicBar = () => {
                     return "translate(0," + i * barHeight + ")";
             })
             .on("mouseover", function(d, i) {
-                d3.select(this).attr('transform', `translate(10, ${i * barHeight})`);
+                d3.select(this).attr('transform', `translate(1, ${i * barHeight})`);
+
+                
             })
             .on("mouseout", function(d, i) {
                 d3.select(this).attr('transform', `translate(0, ${i * barHeight})`);
@@ -405,6 +407,13 @@ const addDynamicBar = () => {
             
 
     bar.append("rect")
+    .on("mouseover", function(d, i) {
+        d3.select(this).style('fill', 'orange'); 
+        console.log(this)
+    })
+    .on("mouseout", function(d, i) {
+        d3.select(this).style('fill', 'red'); 
+    })
     .attr("width", function(d) {
         return 0;
     })
@@ -418,6 +427,7 @@ const addDynamicBar = () => {
         return `${scale(d)}-rect`;
     })
     .attr("height", barHeight - 10)
+    
     
     
     
