@@ -408,11 +408,11 @@ const addDynamicBar = () => {
 
     bar.append("rect")
     .on("mouseover", function(d, i) {
-        d3.select(this).style('fill', 'orange'); 
+        d3.select(this).style('fill', 'red').style('box-shadow','100 100 100px #B20000 '); 
         console.log(this)
     })
     .on("mouseout", function(d, i) {
-        d3.select(this).style('fill', 'red'); 
+        d3.select(this).style('fill', 'orange').style('box-shadow', '0px 0px 0px 0px #0ff'); 
     })
     .attr("width", function(d) {
         return 0;
@@ -449,7 +449,6 @@ const addDynamicBar = () => {
     bar.exit().remove()
 
     d3.select("#dynamicBarDiv").append('p').text("this one is a dynamic bar. it is set by the d3 instead of hardcode SVG...")
-    d3.select("#dynamicBarDiv").selectAll('svg').selectAll('rect').style("fill", "red")
 
 
 }
