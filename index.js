@@ -393,7 +393,14 @@ const addDynamicBar = () => {
 
             .attr("transform", function(d, i) {
                     return "translate(0," + i * barHeight + ")";
-            });
+            })
+            .on("mouseover", function(d, i) {
+                d3.select(this).attr('transform', `translate(10, ${i * barHeight})`);
+            })
+            .on("mouseout", function(d, i) {
+                d3.select(this).attr('transform', `translate(0, ${i * barHeight})`);
+            })
+            ;
             
             
 
@@ -407,7 +414,13 @@ const addDynamicBar = () => {
     .attr("width", function(d) {
                 return scale(d);
     })
+    .attr("id", function(d) {
+        return `${scale(d)}-rect`;
+    })
     .attr("height", barHeight - 10)
+    
+    
+    
 
 
     
@@ -420,10 +433,13 @@ const addDynamicBar = () => {
     .attr("y", (barHeight / 2) - 5)
     .attr("dy", ".35em")
     .style("color", "black")
-    .text(function(d) { return d; });
+    .text(function(d) { return d; })
+    ;
+
+    bar.exit().remove()
 
     d3.select("#dynamicBarDiv").append('p').text("this one is a dynamic bar. it is set by the d3 instead of hardcode SVG...")
-    d3.selectAll('rect').on('mousover', (e) => {console.log("over!");console.log(e)})
+    d3.select("#dynamicBarDiv").selectAll('svg').selectAll('rect').style("fill", "red")
 
 
 }
